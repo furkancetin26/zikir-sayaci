@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zikir Sayacı</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #f4f4f4;
+        }
+        .container {
+            max-width: 400px;
+            margin: 20px auto;
+            padding: 20px;
+            background: white;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+        .zikir {
+            margin-bottom: 15px;
+        }
+        button {
+            padding: 10px 15px;
+            font-size: 16px;
+            cursor: pointer;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Zikir Sayacı</h2>
+        <div id="zikirmatik"></div>
+    </div>
+    
+    <script>
+        const zikirs = [
+            "La ilaheillallah",
+            "Elhamdülillah",
+            "Allahü Ekber",
+            "Sübhanallah",
+            "La havle vela kuvvete illa billahil aliyyil azim",
+            "Elem neşrah leke sadrak...",
+            "Resûlullah (s.a.v.)",
+            "İstiğfar (Estağfirullah el azim ve etübü ileyk)",
+            "İnnâ enzelnâhü fî leyletil-kadr...",
+            "Subhanallahi vel Hamdülillahi vela ilahe illallahu vallahuekber.",
+            "Salavat (Allahümme salli ala seyyidina Muhammed ve ala ali seyyidina Muhammed.)"
+        ];
+        
+        const zikirmatikDiv = document.getElementById("zikirmatik");
+        
+        zikirs.forEach((zikir, index) => {
+            const div = document.createElement("div");
+            div.classList.add("zikir");
+            div.innerHTML = `
+                <p><strong>${zikir}</strong></p>
+                <p id="count${index}">0 / 100</p>
+                <button onclick="increaseCount(${index})">+1</button>
+            `;
+            zikirmatikDiv.appendChild(div);
+        });
+        
+        function increaseCount(index) {
+            const countElement = document.getElementById(`count${index}`);
+            let count = parseInt(countElement.innerText.split("/")[0]);
+            if (count < 100) {
+                count++;
+                countElement.innerText = `${count} / 100`;
+            }
+        }
+    </script>
+</body>
+</html>
