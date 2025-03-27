@@ -21,21 +21,36 @@
         .zikir {
             margin-bottom: 15px;
         }
+        .progress-bar {
+            width: 100%;
+            background-color: #ddd;
+            border-radius: 5px;
+            overflow: hidden;
+            height: 10px;
+            margin-top: 5px;
+        }
+        .progress {
+            height: 100%;
+            width: 0;
+            background-color: #28a745;
+        }
         button {
             padding: 10px 15px;
             font-size: 16px;
             cursor: pointer;
-            background-color: #28a745;
-            color: white;
+            margin: 5px;
             border: none;
             border-radius: 5px;
         }
+        .increase { background-color: #28a745; color: white; }
+        .reset { background-color: #007bff; color: white; }
     </style>
 </head>
 <body>
     <div class="container">
         <h2>Zikir Sayacı</h2>
         <div id="zikirmatik"></div>
+        <button class="reset" onclick="resetAll()">Tümünü Sıfırla</button>
     </div>
     
     <script>
@@ -61,18 +76,28 @@
             div.innerHTML = `
                 <p><strong>${zikir}</strong></p>
                 <p id="count${index}">0 / 100</p>
-                <button onclick="increaseCount(${index})">+1</button>
+                <div class="progress-bar"><div id="progress${index}" class="progress"></div></div>
+                <button class="increase" onclick="increaseCount(${index})">+1</button>
             `;
             zikirmatikDiv.appendChild(div);
         });
         
         function increaseCount(index) {
             const countElement = document.getElementById(`count${index}`);
+            const progressElement = document.getElementById(`progress${index}`);
             let count = parseInt(countElement.innerText.split("/")[0]);
             if (count < 100) {
                 count++;
                 countElement.innerText = `${count} / 100`;
+                progressElement.style.width = `${count}%`;
             }
+        }
+        
+        function resetAll() {
+            zikirs.forEach((_, index) => {
+                document.getElementById(`count${index}`).innerText = "0 / 100";
+                document.getElementById(`progress${index}`).style.width = "0%";
+            });
         }
     </script>
 </body>
